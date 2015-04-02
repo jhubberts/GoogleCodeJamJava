@@ -1,34 +1,27 @@
 package hubberts.codejam.problems.practice;
 
+import hubberts.codejam.CodeJamProblem;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
+ * http://code.google.com/codejam/contest/189252/dashboard
+ *
  * @author jhubberts Mar 31, 2015.
  */
-public class AllYourBase {
+public class AllYourBaseProblem extends CodeJamProblem {
 
-    public static void main( String[] args ) throws Exception {
-        File inFile = new File( args[0] );
-        File outFile = new File( args[1] );
-
-        BufferedReader br = new BufferedReader( new FileReader( inFile ) );
-        PrintWriter writer = new PrintWriter( new FileWriter( outFile ) );
-
-        int size = Integer.parseInt( br.readLine() );
-        System.out.println( size );
-        for( int i=1; i <= size; i++ ){
-            int minSeconds = stringToMinSeconds( br.readLine() );
-            writer.write( String.format( "Case #%d: %d\n", i, minSeconds ) );
-        }
-
-        writer.close();
+    public static void main( String[] args ) {
+        new AllYourBaseProblem().run();
     }
 
-    public static int stringToMinSeconds( String str ) {
+    @Override
+    public void solveCase(Scanner sc, PrintWriter pw) throws Exception {
+        pw.write( String.valueOf( stringToMinSeconds( sc.next() ) ) );
+    }
+
+    public static long stringToMinSeconds( String str ) {
         Map<Character,Integer> digitMap = new HashMap<>();
         List<Integer> reversedDigits = new ArrayList<>();
 
@@ -48,8 +41,8 @@ public class AllYourBase {
             reversedDigits.add( digitMap.get( c ) );
         }
 
-        int sum = 0;
-        int pow = 1;
+        long sum = 0;
+        long pow = 1;
 
         for( int i = reversedDigits.size() - 1; i >= 0; i-- ) {
             sum += reversedDigits.get( i ) * pow;
@@ -59,4 +52,9 @@ public class AllYourBase {
         return sum;
     }
 
+
+    @Override
+    public String getProblemName() {
+        return "all-your-base";
+    }
 }
