@@ -145,5 +145,3 @@ public abstract class CodeJamProblem implements Runnable {
     }
 
 }
-
-
