@@ -1,14 +1,35 @@
-package hubberts.codejam;
+package hubberts.codejam.problems.practice;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import hubberts.codejam.CodeJamProblem;
+
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
- * @author jhubberts Mar 31, 2015.
+ * http://code.google.com/codejam/contest/351101/dashboard
+ *
+ * @author jhubberts Apr 01, 2015.
  */
-public class StoreCredit {
+public class StoreCreditProblem extends CodeJamProblem {
+
+    public static void main( String[] args ) {
+        new StoreCreditProblem().run();
+    }
+
+    @Override
+    public String getProblemName() {
+        return "store-credit";
+    }
+
+    @Override
+    public void solveCase( Scanner sc, PrintWriter pw ) throws Exception {
+        int credit = sc.nextInt();
+        int numItems = sc.nextInt();
+        List<Integer> items = new ArrayList<>();
+        for( int i = 0; i < numItems; i++ ) { items.add( sc.nextInt() ); }
+        Pair<Integer> indexes = getResult( credit, items );
+        pw.write( indexes.x + " " + indexes.y );
+    }
 
     protected static class Pair<T> {
         public T x;
@@ -51,22 +72,6 @@ public class StoreCredit {
         }
 
         throw new IllegalArgumentException( "The input had no solution" );
-    }
-
-    public static void main( String[] args ) throws Exception {
-
-        try( BufferedReader br = new BufferedReader( new FileReader( args[0] ) );
-             FileWriter writer = new FileWriter( args[1] ) ) {
-            int numCases = Integer.parseInt(br.readLine());
-            for( int caseNum = 1; caseNum <= numCases; caseNum++ ) {
-                List<Integer> items = new ArrayList<>();
-                int credit = Integer.parseInt( br.readLine() );
-                br.readLine();
-                for( String s : br.readLine().split(" ") ) { items.add( Integer.parseInt( s ) ); }
-                Pair<Integer> indexes = getResult(credit, items);
-                writer.write( String.format( "Case #%d: %d %d\n", caseNum, indexes.x, indexes.y ) );
-            }
-        }
     }
 
 }

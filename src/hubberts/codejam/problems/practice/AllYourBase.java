@@ -1,4 +1,4 @@
-package hubberts.codejam;
+package hubberts.codejam.problems.practice;
 
 import java.io.*;
 import java.util.ArrayList;
