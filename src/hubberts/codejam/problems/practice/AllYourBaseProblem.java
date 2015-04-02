@@ -52,9 +52,4 @@ public class AllYourBaseProblem extends CodeJamProblem {
         return sum;
     }
 
-
-    @Override
-    public String getProblemName() {
-        return "all-your-base";
-    }
 }

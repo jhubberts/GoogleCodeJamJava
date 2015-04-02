@@ -1,12 +1,14 @@
 package hubberts.codejam;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.*;
 import java.io.*;
 
 /**
  * Template for Google Code Jam problems which abstracts away a lot of the nonsense boilerplate required to
  * perform I/O in Java. Implementers will need to do all of their heavy lifting in the solveCase method, and
- * will need to specify the directory containing input files in the getProblemName method
+ * may specify the directory containing input files in the getProblemName method
  *
  * The easiest way to run this in an IDE is to have implementers define a main method that just calls run on an
  * instance of itself.
@@ -33,11 +35,27 @@ public abstract class CodeJamProblem implements Runnable {
 
     /**
      * Returns the name of the directory containing the inputs for this problem. It is expected that this
-     * directory A. exists, and B. is a sub-directory of PROBLEMS_DIRECTORY
+     * directory A. exists, and B. is a sub-directory of PROBLEMS_DIRECTORY. Unless you explicitly override
+     * this method, it will assume that your directory name is the spinal-cased version of your class name
+     * minus the word "Problem". e.x. StoreCreditProblem -> store-credit
      *
      * @return the name of the directory containing the inputs for this problem
      */
-    public abstract String getProblemName();
+    public String getProblemName() {
+        String className = this.getClass().getSimpleName();
+
+        // Trim off problem
+        if( !className.endsWith( "Problem" ) ) {
+            throw new IllegalArgumentException( "Class " + className + " does not follow the standard naming "
+                    + "convention, you must override getProblem()." );
+        }
+
+        // Get each word of the camel cased title
+        String[] words = StringUtils.splitByCharacterTypeCamelCase( className.substring( 0, className.length() - 7 ) );
+
+        // Join the words together with dashes
+        return StringUtils.join( words, "-" ).toLowerCase();
+    }
 
     public void run() {
         try {
@@ -49,6 +67,9 @@ public abstract class CodeJamProblem implements Runnable {
                      PrintWriter pw = new PrintWriter( new FileWriter( outFile ) ) ) {
 
                     int caseCnt = sc.nextInt();
+
+                    // If you don't do this, sc.nextLine() will return "" for the first line
+                    sc.nextLine();
 
                     for( int caseNum = 1; caseNum <= caseCnt; caseNum++ ) {
                         System.out.println( "Processing test case " + caseNum );

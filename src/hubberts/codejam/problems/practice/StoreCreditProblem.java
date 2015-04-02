@@ -17,11 +17,6 @@ public class StoreCreditProblem extends CodeJamProblem {
     }
 
     @Override
-    public String getProblemName() {
-        return "store-credit";
-    }
-
-    @Override
     public void solveCase( Scanner sc, PrintWriter pw ) throws Exception {
         int credit = sc.nextInt();
         int numItems = sc.nextInt();
